@@ -1,7 +1,6 @@
 const express = require("express");
 var cors = require("cors");
 const bodyParser = require("body-parser");
-const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
@@ -30,15 +29,6 @@ app.use(function (req, res, next) {
 
 //Set security HTTP headers
 app.use(helmet());
-
-//Limit request from the same API
-const limiter = rateLimit({
-  max: 1000,
-  windowMs: 60 * 60 * 1000,
-  message: "Too many requests from this IP, please try again in an hour!",
-});
-
-app.use(limiter);
 
 //Body parser, reading data from body into req.body
 app.use(express.json());
